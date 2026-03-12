@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="android_wear_capabilities">
+        <!-- Also requires `settings put global mode_capability 1` -->
+        <!-- <item>capability_mode_mirroring_host_device</item> -->
+    </string-array>
+</resources>
