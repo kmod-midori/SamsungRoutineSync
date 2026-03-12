@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        tools:ignore="ForegroundServicesPolicy" />
+
     <application
+        android:name=".RoutineApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,18 +15,27 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SamsungRoutineSync"
-        android:name=".RoutineApplication">
+        android:theme="@style/Theme.SamsungRoutineSync">
+        <activity
+            android:name=".SleepModeActionActivity"
+            android:exported="true"
+            android:label="@string/title_activity_sleep_mode_action"
+            android:theme="@style/Theme.SamsungRoutineSync">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".ModeInfoProvider"
             android:authorities="com.samsung.android.app.routines.modeinfoprovider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.SamsungRoutineSync">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

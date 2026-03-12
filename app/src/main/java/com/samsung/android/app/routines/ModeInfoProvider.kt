@@ -14,18 +14,15 @@ import org.json.JSONObject
 class ModeInfoProvider : ContentProvider() {
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        TODO("Implement this to handle requests to delete one or more rows")
+        return 0
     }
 
     override fun getType(uri: Uri): String? {
-        TODO(
-            "Implement this to handle requests for the MIME type of the data" +
-                    "at the given URI"
-        )
+        return null
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Implement this to handle requests to insert a new row.")
+        return null
     }
 
     override fun onCreate(): Boolean {
@@ -36,7 +33,6 @@ class ModeInfoProvider : ContentProvider() {
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
-        Log.i(TAG, "query $uri")
         return null
     }
 
@@ -44,15 +40,15 @@ class ModeInfoProvider : ContentProvider() {
         uri: Uri, values: ContentValues?, selection: String?,
         selectionArgs: Array<String>?
     ): Int {
-        TODO("Implement this to handle requests to update one or more rows.")
+        return 0
     }
 
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
         val result = when (method) {
             "get_mode" -> {
                 Bundle().apply {
-                    putLong("mode_id", 0)
-                    putBoolean("mode_is_running", false)
+                    putLong("mode_id", SLEEP_MODE_ID)
+                    putBoolean("mode_is_running", sleepModeEnabled)
                     putString("mode_running_reason_condition", "")
                 }
             }
@@ -82,6 +78,11 @@ class ModeInfoProvider : ContentProvider() {
                 val modeIsRunning = extras.getBoolean("mode_is_running", false)
                 val modeId = extras.getLong("mode_id", 0)
                 Log.i(TAG, "set_mode $modeId $modeIsRunning")
+
+                if (modeId == SLEEP_MODE_ID) {
+                    sleepModeEnabled = modeIsRunning
+                }
+
                 Bundle()
             }
             "set_sleep_schedule_status" -> {
@@ -94,6 +95,7 @@ class ModeInfoProvider : ContentProvider() {
         return result
     }
 
+    @Suppress("DEPRECATION")
     fun bundleToString(bundle: Bundle?): Map<String, Any?> {
         val map = mutableMapOf<String, Any?>()
         if (bundle == null) return map
@@ -104,7 +106,10 @@ class ModeInfoProvider : ContentProvider() {
     }
 
     companion object {
-        private val TAG = "ModeInfoProvider"
+        private const val TAG = "ModeInfoProvider"
+        private const val SLEEP_MODE_ID = 100L
+
+        var sleepModeEnabled = false
 
         private fun notifyChangeForUri(context: Context, uri: String) {
             context.contentResolver.notifyChange(uri.toUri(), null)
