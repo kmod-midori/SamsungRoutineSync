@@ -44,6 +44,7 @@ class SleepModeActionActivity : ComponentActivity(), TaskerPluginConfig<SleepMod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        helper.onCreate()
         enableEdgeToEdge()
         setContent {
             val enabled by enableFlow.collectAsState()

@@ -46,6 +46,11 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
                     Text("Notify schedule update")
                 }
                 Button(onClick = {
+                    ModeInfoProvider.notifyScheduleStatusChanged(context)
+                }) {
+                    Text("Notify schedule status update")
+                }
+                Button(onClick = {
                     ModeInfoProvider.sleepModeEnabled = true
                     ModeInfoProvider.notifyModeStatusChanged(context)
                 }) {

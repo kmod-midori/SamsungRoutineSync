@@ -55,7 +55,7 @@ class ModeInfoProvider : ContentProvider() {
             "get_sleep_mode_info" -> {
                 Bundle().apply {
                     putBoolean("is_dnd_on_enabled", true)
-                    putBoolean("is_schedule_enabled", true)
+                    putBoolean("is_schedule_enabled", false)
                 }
             }
             "get_mode_resources" -> {
@@ -120,7 +120,11 @@ class ModeInfoProvider : ContentProvider() {
         }
 
         fun notifySleepScheduleChanged(context: Context) {
-            notifyChangeForUri(context, "content://com.samsung.android.app.routines.modeinfoprovider/sleep_schedules")
+            notifyChangeForUri(context, "content://com.samsung.android.app.routines.modeinfoprovider/sleep_schedules/next_schedule")
+        }
+
+        fun notifyScheduleStatusChanged(context: Context) {
+            notifyChangeForUri(context, "content://com.samsung.android.app.routines.modeinfoprovider/sleep_schedules/status")
         }
     }
 }
