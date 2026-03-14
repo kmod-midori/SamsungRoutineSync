@@ -46,19 +46,12 @@ fun MainActivityContent(modifier: Modifier = Modifier) {
                     Text("Notify schedule update")
                 }
                 Button(onClick = {
-                    ModeInfoProvider.notifyScheduleStatusChanged(context)
-                }) {
-                    Text("Notify schedule status update")
-                }
-                Button(onClick = {
-                    ModeInfoProvider.sleepModeEnabled = true
-                    ModeInfoProvider.notifyModeStatusChanged(context)
+                    RoutineApplication.getInstance().updateSleepModeFromPhone(true)
                 }) {
                     Text("Turn on")
                 }
                 Button(onClick = {
-                    ModeInfoProvider.sleepModeEnabled = false
-                    ModeInfoProvider.notifyModeStatusChanged(context)
+                    RoutineApplication.getInstance().updateSleepModeFromPhone(false)
                 }) {
                     Text("Turn off")
                 }

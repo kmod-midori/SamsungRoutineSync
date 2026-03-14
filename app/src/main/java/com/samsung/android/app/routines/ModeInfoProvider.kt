@@ -46,9 +46,11 @@ class ModeInfoProvider : ContentProvider() {
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
         val result = when (method) {
             "get_mode" -> {
+                val isSleepModeRunning = RoutineApplication.getInstance().sleepMode.value.running
+
                 Bundle().apply {
                     putLong("mode_id", SLEEP_MODE_ID)
-                    putBoolean("mode_is_running", sleepModeEnabled)
+                    putBoolean("mode_is_running", isSleepModeRunning)
                     putString("mode_running_reason_condition", "")
                 }
             }
@@ -80,13 +82,12 @@ class ModeInfoProvider : ContentProvider() {
                 Log.i(TAG, "set_mode $modeId $modeIsRunning")
 
                 if (modeId == SLEEP_MODE_ID) {
-                    sleepModeEnabled = modeIsRunning
+                    RoutineApplication.getInstance().updateSleepModeFromWatch(modeIsRunning)
                 }
 
                 Bundle()
             }
             "set_sleep_schedule_status" -> {
-                if (extras == null) return null
                 Bundle()
             }
             else -> null
@@ -108,8 +109,6 @@ class ModeInfoProvider : ContentProvider() {
     companion object {
         private const val TAG = "ModeInfoProvider"
         private const val SLEEP_MODE_ID = 100L
-
-        var sleepModeEnabled = false
 
         private fun notifyChangeForUri(context: Context, uri: String) {
             context.contentResolver.notifyChange(uri.toUri(), null)

@@ -111,8 +111,9 @@ class SleepModeActionRunner : TaskerPluginRunnerActionNoOutput<SleepModeInput>()
         context: Context,
         input: TaskerInput<SleepModeInput>
     ): TaskerPluginResult<Unit> {
-        ModeInfoProvider.sleepModeEnabled = input.regular.enable
-        ModeInfoProvider.notifyModeStatusChanged(context)
+        RoutineApplication.getInstance().updateSleepModeFromTasker(
+            running = input.regular.enable
+        )
         return TaskerPluginResultSucess(Unit)
     }
 }

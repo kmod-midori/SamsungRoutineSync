@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Samsung Routine Sync</string>
     <string name="title_activity_sleep_mode_action">Sleep Mode on Watch</string>
+    <string name="title_activity_sleep_mode_state">Sleep Mode on Watch</string>
 </resources>

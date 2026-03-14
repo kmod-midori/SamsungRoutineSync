@@ -26,6 +26,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".SleepModeStateActivity"
+            android:exported="true"
+            android:label="@string/title_activity_sleep_mode_state"
+            android:theme="@style/Theme.SamsungRoutineSync">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".ModeInfoProvider"
             android:authorities="com.samsung.android.app.routines.modeinfoprovider"
